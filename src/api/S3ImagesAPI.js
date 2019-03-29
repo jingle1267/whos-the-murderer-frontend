@@ -13,3 +13,5 @@ var s3 = new AWS.S3();
 export default {
   s3: s3,
 }
+
+//Caroline's test for gitignore
