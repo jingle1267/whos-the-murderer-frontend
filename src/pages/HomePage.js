@@ -5,10 +5,11 @@ import GoogleVisionAPI from '../api/GoogleVisionAPI';
 import ImagesList from '../components/ImagesList/ImagesList';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
-import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
+// import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
 import parseImageJSON1 from '../api/parseImageJSON1';
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
+
 
 
 class HomePage extends Component {
@@ -24,19 +25,20 @@ class HomePage extends Component {
       // },
 
 
-      presignedImageUrls : [],
-      clues : [],
-      imageNames : [],
-      murderer: "",
-      gameDifficulty: 0,
-      murdererAttributes : {},
-      isWon: false,
-        // murdererAttributes : { 
+      // murdererAttributes : { 
         //   mainEmotion : "sorrow",
         //   features: ["Glasses", "Hair", "Moustache"],
         //   colors: []
         // }
-    }
+        presignedImageUrls : [],
+        clues : [],
+        imageNames : [],
+        murderer: "",
+        gameDifficulty: 0,
+        murdererAttributes : {},
+        isWon: false,
+        gameStarted: false,
+      }
   }
 
   componentDidMount(){
@@ -50,13 +52,10 @@ class HomePage extends Component {
         this.setState({
           imageNames: imageNames
         })
-        // console.log(this.state.imageNames)
     })
     CluesAPI.fetchClues()
       .then((apiResponseJSON) => {
-
         clues.push(apiResponseJSON)
-
         this.setState({
           clues: clues[0]
         })
@@ -133,7 +132,8 @@ class HomePage extends Component {
     // var murderer = this.state.presignedImageUrls[Math.floor(Math.random()*this.state.presignedImageUrls.length)];
     var murderer = currentGameImages[Math.floor(Math.random()*currentGameImages.length)];
     this.setState({
-      murderer: murderer
+      murderer: murderer,
+      gameStarted : true
     })
     this.handleAnalyzeMurderer(murderer)
   }
@@ -151,8 +151,6 @@ class HomePage extends Component {
       this.setState({
         isWon: true
       })
-    } else {
-      // flip
     }
   }
 
@@ -161,7 +159,6 @@ class HomePage extends Component {
     
     return (
       <div>
-
         <div>
 
           {/* <button onClick={this.getImageURLs}>Show ALL Images</button> 
@@ -169,21 +166,21 @@ class HomePage extends Component {
 
           { this.state.gameDifficulty ? null : <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> }
           <br/>
-          Step 2 - 
-          <button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</button> 
-          <p style={{ fontSize: "8pt"}}> Randomly selects images from the provided number</p>
+
+          { this.state.gameStarted ? null :
+          <div>
+            <button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</button> 
+            <p style={{ fontSize: "8pt"}}> Randomly selects images from the provided number</p>
+          </div>
+          }
 
           { this.state.murderer ? console.log(`The murderer is ${this.state.murderer}`)  : null }
           
-          <AnalyzeMurdererButton handleAnalyzeImage={this.handleAnalyzeImage}/>
+          { this.state.gameStarted ? <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/> : null }
 
-          <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/>
+          { this.state.presignedImageUrls.length > 0 ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }
 
-          { this.state.isWon ? <h1>Well done!! You have found the murderer! Have you considered becoming a PI?</h1>  : null }
-          
-
-
-          { this.state.presignedImageUrls.length > 0 ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} murderer={this.state.murderer} /> : null }
+          { this.state.isWon ? <h2>Well done!! You have found the murderer! Have you considered becoming a PI?</h2>  : null }
 
         </div>
       </div>
