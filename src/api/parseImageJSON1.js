@@ -1,17 +1,20 @@
-let imageData = {
-  mainEmotion : "",
-  headwear: false,
-  colors: [],
-  hair: false
-}
+const possibleAttributes = [
+  "Facial hair", 
+  "Glasses", 
+  "Beard", 
+  "Lipstick", 
+  "Wrinkle",   
+  "Shout", 
+  "Moustache"
+]
+
+const possibleHeadwear = ["Hat", "Beanie", "Cap"]
 
 let imageData = {
   mainEmotion : "",
-  features : [],
+  features: [],
   colors: [],
 }
-
-
 
 function grabMainEmotion(jsonObject) {
   const emotion = jsonObject.faceAnnotations[0]
@@ -24,7 +27,7 @@ function grabMainEmotion(jsonObject) {
   } else if (emotion.surpriseLikelihood === "VERY_LIKELY" || emotion.surpriseLikelihood === "POSSIBLE" || emotion.surpriseLikelihood === "LIKELY") {
     imageData.mainEmotion = "surprise"
   } else if (emotion.headwearLikelihood === "VERY_LIKELY" || emotion.headwearLikelihood === "POSSIBLE" || emotion.headwearLikelihood === "LIKELY") {
-    imageData.headwear = true
+    // imageData.features.push('hat')
     imageData.mainEmotion = "hat"
   }
 }
@@ -42,20 +45,6 @@ function grabColors(jsonObject) {
   };
 }
 
-const possibleAttributes = ["Facial hair", "Glasses", "Beard", "Lipstick", "Wrinkle", "Shout", "Moustache"]
-const possibleHeadwear = ["Hat", "Beanie", "Cap"]
-
-// function getAdditionalAttributesAsKeys(jsonObject) {
-//   for (let element of jsonObject.labelAnnotations) {
-//     if (possibleAttributes.includes(element.description)) {
-//       key = element.description.replace(/\s/g, '')
-//       imageData[key.toLowerCase()] = true
-//     }
-//     if (element.description.includes("Hat")) {
-//       imageData.headwear = true
-//     }
-//   }
-// }
 
 function getAdditionalAttributesAsArray(jsonObject) {
   let newAttributes = []
@@ -63,19 +52,22 @@ function getAdditionalAttributesAsArray(jsonObject) {
     if (possibleAttributes.includes(element.description)) {
       // key = element.description.replace(/\s/g, '')
       newAttributes.push(element.description)
+      imageData.features.push(element.description)
+
     }
-    if (possibleHeadwear.includes(element.description)) {
-      imageData.headwear = true
-    }
-    imageData['otherAttributes'] = newAttributes
+    if (imageData.mainEmotion !== "hat") {
+      if (possibleHeadwear.includes(element.description)) {
+        imageData.features.push("hat")
+        break
+      }
+  }
   }
 }
 
 function hasHair(jsonObject) {
   for (let element of jsonObject.labelAnnotations) {
-      // let regex = /hair/i
     if (/hair/i.test(element.description)) {
-      imageData.hair = true
+      return imageData.features.push("Hair")
     }
   }
 }
@@ -84,10 +76,10 @@ const parseData = (jsonResponse) => {
   console.log("====================")
   console.log(jsonResponse.responses[0])  
   let jsonObject = jsonResponse.responses[0]
-  getAdditionalAttributesAsArray(jsonObject)
   grabMainEmotion(jsonObject)
   grabColors(jsonObject)
   hasHair(jsonObject)
+  getAdditionalAttributesAsArray(jsonObject)
   return imageData
 } 
 

@@ -6,7 +6,9 @@ import FaceImage from '../components/FaceImage/FaceImage';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
 import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
-import parseImageJSON from '../api/parseImageJSON';
+// import parseImageJSON from '../api/parseImageJSON';
+import parseImageJSON1 from '../api/parseImageJSON1';
+
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
 
@@ -21,15 +23,10 @@ class HomePage extends Component {
       murderer: "",
       gameDifficulty: 0,
       // murdererAttributes : {},
-      // murdererAttributes : { 
-      //   mainEmotion : "sorrow",
-      //   headwear: false,
-      //   colors: [],
-      //   hair: true
-      // }
+
       murdererAttributes : { 
         mainEmotion : "sorrow",
-        features: ["Glasses", "Hair"],
+        features: ["Glasses", "Hair", "Moustache"],
         colors: []
       }
     }
@@ -80,7 +77,7 @@ class HomePage extends Component {
     GoogleVisionAPI.analyzeImage(this.state.murderer)
       .then((JSONresponse) => { 
         console.log(JSONresponse)
-      let data = parseImageJSON.parseData(JSONresponse)
+      let data = parseImageJSON1.parseData(JSONresponse)
         this.setState({ 
           murdererAttributes: data 
         }) 
@@ -151,7 +148,6 @@ class HomePage extends Component {
           <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/>
 
           {/* { this.state.murdererAttributes ? <p>{ this.state.murdererAttributes.mainEmotion }</p> : null } */}
-
 
 
           { this.state.presignedImageUrls ? <FaceImage imageURLs={this.state.presignedImageUrls} /> : null }

@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 // import GoogleVisionAPI from './api/GoogleVisionAPI';
 import FileUpload from './components/FileUpload/FileUpload';
 import HomePage from './pages/HomePage';
+import './App.css';
 
 class App extends Component {
 

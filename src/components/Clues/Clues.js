@@ -3,42 +3,33 @@ import React, { Component } from 'react';
 
 class Clues extends Component {
   state = {
-    // showClues : false,
-    showClues : 0,
+    showClues : -1,
     currentGameHints : []
   }
 
-  createClues() {
+  createTextHints() {
     let clues = this.props.clues
     let murdererAttributes = this.props.murdererAttributes
-    let currentGameHints = {}
+    let currentGameHints = []
     for (let element of clues) {
-      let clue = Object.values(element)
-      // console.log(clue_key)
-      // console.log(clue_text)
-      let clue_key = clue[1]
-      let clue_text = clue[2]
+      let clue_key = Object.values(element)[1]
+      let clue_text = Object.values(element)[2]
       if (clue_key === murdererAttributes.mainEmotion) {
-        // return <p> { clue[2] } </p>
-        currentGameHints['mainEmotion'] = clue_text
+        currentGameHints.push(clue_text)
       }
-      // console.log(clue_key)
-      // console.log(murdererAttributes.features)
-
       if (murdererAttributes.features.includes(clue_key)) {
-        currentGameHints[clue_key] = clue_text
+        currentGameHints.push(clue_text)
       }
     }
     this.setState({
       currentGameHints: currentGameHints
     })
-    console.log(currentGameHints.Hair)
-    
-    // console.log(this.state.currentGameHints.mainEmotion)
   }
 
-  handleClick = (ev) => {
-    this.createClues()
+
+
+  handleClick = () => {
+    this.createTextHints()
     this.setState({
       showClues : this.state.showClues + 1
     })
@@ -48,12 +39,13 @@ class Clues extends Component {
     return (
       <div>
         <hr/>
-        <h6 className="hint-text" onClick={this.handleClick}>Psst! Need a hint?</h6>
-        { this.state.showClues >= 1 ? <p>  {this.state.currentGameHints.mainEmotion} </p> : null }
-        <h6 className="hint-text" onClick={this.handleClick}>Psst! Need anoooooother hint?</h6>
-        { this.state.showClues >= 2  ? this.state.currentGameHints.Hair : null }
-        <h6 className="hint-text" onClick={this.handleClick}>More hints?</h6>
-        { this.state.showClues >= 3  ? this.state.currentGameHints.Glasses : null }
+
+        { this.state.showClues === this.state.currentGameHints.length ? 
+          <p >That's all the clues you're going to get, try making a guess!</p> : 
+          <h6  onClick={this.handleClick} >Psst! Need a hint?</h6> 
+        }
+
+        { this.state.showClues >= 0 ? <p className="hint-text">  {this.state.currentGameHints[0 + this.state.showClues]} </p> : null }
 
       </div>
     );
