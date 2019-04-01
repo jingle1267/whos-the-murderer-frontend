@@ -9,6 +9,9 @@ import NewGameForm from '../components/NewGameForm/NewGameForm';
 import parseImageJSON1 from '../api/parseImageJSON1';
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
+import PlayAgainButton from '../components/PlayAgainButton/PlayAgainButton';
+import { Button } from 'react-bootstrap';
+
 
 
 
@@ -38,6 +41,7 @@ class HomePage extends Component {
         murdererAttributes : {},
         isWon: false,
         gameStarted: false,
+        guessAgain: false
       }
   }
 
@@ -149,9 +153,28 @@ class HomePage extends Component {
     let clickedImgUrl = ev.target.src
     if (clickedImgUrl === this.state.murderer) {
       this.setState({
-        isWon: true
+        isWon: true,
+        guessAgain: false
+      })
+    } else {
+      this.setState({
+        guessAgain: true
       })
     }
+  }
+
+  handlePlayAgain = (ev) => {
+    this.setState({
+      presignedImageUrls : [],
+      clues : [],
+      imageNames : [],
+      murderer: "",
+      gameDifficulty: 0,
+      murdererAttributes : {},
+      isWon: false,
+      gameStarted: false,
+      guessAgain: false
+    })
   }
 
 
@@ -164,13 +187,15 @@ class HomePage extends Component {
           {/* <button onClick={this.getImageURLs}>Show ALL Images</button> 
           <p style={{ fontSize: "8pt"}}>(Gets Presigned URLS for all imagesnames in state)</p> */}
 
+
+
           { this.state.gameDifficulty ? null : <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> }
           <br/>
 
           { this.state.gameStarted ? null :
           <div>
-            <button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</button> 
-            <p style={{ fontSize: "8pt"}}> Randomly selects images from the provided number</p>
+            <Button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</Button> 
+            {/* <p style={{ fontSize: "8pt"}}> Randomly selects images from the provided number</p> */}
           </div>
           }
 
@@ -178,10 +203,13 @@ class HomePage extends Component {
           
           { this.state.gameStarted ? <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/> : null }
 
+          { this.state.guessAgain ? <p className="guess-again">Nope - guess again!</p> : null }
+
           { this.state.presignedImageUrls.length > 0 ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }
 
-          { this.state.isWon ? <h2>Well done!! You have found the murderer! Have you considered becoming a PI?</h2>  : null }
+          { this.state.isWon ? <div><PlayAgainButton handlePlayAgain={this.handlePlayAgain} /></div>  : null }
 
+          
         </div>
       </div>
     );
