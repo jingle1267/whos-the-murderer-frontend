@@ -1,43 +1,54 @@
 import React, { Component } from 'react';
-import { Row, Container, Image, Col } from 'react-bootstrap';
+import { Image, Col } from 'react-bootstrap';
+import ReactCardFlip from 'react-card-flip';
 
 class FaceImage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFlipped: false
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  createImageCircles() {
-    let images = Object.values(this.props.imageURLs)
-    return images.map(( imageURL, index ) =>
-      <div key={index} >
-        <Col lg={6} xl={4} >
-          <Image onClick={this.handleFlip} src={imageURL} roundedCircle  style={{ maxHeight: "35vh", border: "solid 15px grey" }}/>
-        </Col>
-      </div>
-      )
+  handleClick(event) {
+    event.preventDefault();
+    this.props.handleClickedImage(event)
+    // this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+    this.setState({ 
+      isFlipped: true 
+    })
+  }
+
+  handleWinningGuess = () => {
+    if (this.props.imageURL === this.props.murderer) {
+      return <Col lg={6} xl={4} >
+      <Image src={this.props.imageURL} roundedCircle  id="murderer" className="enlarge" style={{ maxHeight: "35vh", border: "solid 15px black" }}/> 
+    </Col> 
+    } else {
+      return <Col lg={6} xl={4} >
+      <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "35vh", border: "solid 15px grey", opacity: "0.5" }}/> 
+    </Col> 
     }
-
-  handleFlip = (ev) => {
-    console.log(ev)
   }
 
   render() {
+    
+    console.log(this.props.isWon)
+
     return (
       <div>
-        <Container>
-          <Row>
 
-          { this.createImageCircles() }
-
-          {/* <Col lg={6} xl={4} >
-              <Image src={surprised_mustache} roundedCircle  style={{ maxHeight: "40vh", border: "solid 15px grey" }}/>
+        { this.props.isWon ? this.handleWinningGuess() :
+          <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+            <Col lg={6} xl={4} key="front" >
+              <Image onClick={this.handleClick} src={this.props.imageURL} roundedCircle style={{ maxHeight: "35vh", border: "solid 15px grey" }}/>
             </Col>
-            <Col lg={6} xl={4} >
-              <Image src={sad_female_red} roundedCircle  style={{ maxHeight: "40vh", border: "solid 15px grey" }}/>
-            </Col>
-            <Col lg={6} xl={4} >
-              <Image src={elderly_male_glasses} roundedCircle  style={{ maxHeight: "40vh", border: "solid 15px grey" }}/>
-            </Col> */}
-          </Row>
-        </Container>
-        
+            <Col lg={6} xl={4} key="back" >
+              <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "35vh", border: "solid 15px grey", opacity: "0.5" }}/> 
+            </Col>         
+          </ReactCardFlip>
+          }
       </div>
     );
   }

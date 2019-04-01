@@ -2,34 +2,43 @@ import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import S3ImagesAPI from "../api/S3ImagesAPI"
 import GoogleVisionAPI from '../api/GoogleVisionAPI';
-import FaceImage from '../components/FaceImage/FaceImage';
+import ImagesList from '../components/ImagesList/ImagesList';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
-import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
-// import parseImageJSON from '../api/parseImageJSON';
+// import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
 import parseImageJSON1 from '../api/parseImageJSON1';
-
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
+
 
 
 class HomePage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      presignedImageUrls : [],
-      clues : [],
-      imageNames : [],
-      murderer: "",
-      gameDifficulty: 0,
-      // murdererAttributes : {},
+      // presignedImageUrls : ["https://guess-who-images.s3.us-east-2.amazonaws.com/creepy_smile_guy?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=c8ebd2c5ee41d26bbc971a406e1eb7afafbe2a025999c5919223d4a5eaa02c4c&X-Amz-SignedHeaders=host", "https://guess-who-images.s3.us-east-2.amazonaws.com/male_sunglasses?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=cd003a73a24ca315bb227b3e5af624f9cd64ece62f0328811775dc6398b3eab2&X-Amz-SignedHeaders=host"],      
+      // murderer: "https://guess-who-images.s3.us-east-2.amazonaws.com/creepy_smile_guy?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=c8ebd2c5ee41d26bbc971a406e1eb7afafbe2a025999c5919223d4a5eaa02c4c&X-Amz-SignedHeaders=host",
+      // murdererAttributes : { 
+      //   mainEmotion : "joy",
+      //   features: ["Facial hair", "Hair", "Moustache"],
+      //   colors: []
+      // },
 
-      murdererAttributes : { 
-        mainEmotion : "sorrow",
-        features: ["Glasses", "Hair", "Moustache"],
-        colors: []
+
+      // murdererAttributes : { 
+        //   mainEmotion : "sorrow",
+        //   features: ["Glasses", "Hair", "Moustache"],
+        //   colors: []
+        // }
+        presignedImageUrls : [],
+        clues : [],
+        imageNames : [],
+        murderer: "",
+        gameDifficulty: 0,
+        murdererAttributes : {},
+        isWon: false,
+        gameStarted: false,
       }
-    }
   }
 
   componentDidMount(){
@@ -43,13 +52,10 @@ class HomePage extends Component {
         this.setState({
           imageNames: imageNames
         })
-        // console.log(this.state.imageNames)
     })
     CluesAPI.fetchClues()
       .then((apiResponseJSON) => {
-
         clues.push(apiResponseJSON)
-
         this.setState({
           clues: clues[0]
         })
@@ -73,8 +79,19 @@ class HomePage extends Component {
     })
   }
 
-  handleAnalyzeImage = () => {
-    GoogleVisionAPI.analyzeImage(this.state.murderer)
+  // handleAnalyzeImage = () => {
+  //   GoogleVisionAPI.analyzeImage(this.state.murderer)
+  //     .then((JSONresponse) => { 
+  //       console.log(JSONresponse)
+  //     let data = parseImageJSON1.parseData(JSONresponse)
+  //       this.setState({ 
+  //         murdererAttributes: data 
+  //       }) 
+  //       console.log(this.state.murdererAttributes)
+  //     })
+  // }
+  handleAnalyzeMurderer = (murdererURL) => {
+    GoogleVisionAPI.analyzeImage(murdererURL)
       .then((JSONresponse) => { 
         console.log(JSONresponse)
       let data = parseImageJSON1.parseData(JSONresponse)
@@ -115,8 +132,10 @@ class HomePage extends Component {
     // var murderer = this.state.presignedImageUrls[Math.floor(Math.random()*this.state.presignedImageUrls.length)];
     var murderer = currentGameImages[Math.floor(Math.random()*currentGameImages.length)];
     this.setState({
-      murderer: murderer
+      murderer: murderer,
+      gameStarted : true
     })
+    this.handleAnalyzeMurderer(murderer)
   }
 
   selectImagesForCurrentGame = () => {
@@ -126,10 +145,20 @@ class HomePage extends Component {
     this.getCurrentGameImageURLs(currentGameImages)
   }
 
+  handleClickedImage = (ev) => {
+    let clickedImgUrl = ev.target.src
+    if (clickedImgUrl === this.state.murderer) {
+      this.setState({
+        isWon: true
+      })
+    }
+  }
+
+
   render() {
+    
     return (
       <div>
-
         <div>
 
           {/* <button onClick={this.getImageURLs}>Show ALL Images</button> 
@@ -137,20 +166,21 @@ class HomePage extends Component {
 
           { this.state.gameDifficulty ? null : <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> }
           <br/>
-          Step 2 - 
-          <button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</button> 
-          <p style={{ fontSize: "8pt"}}> Randomly selects images from the provided number</p>
+
+          { this.state.gameStarted ? null :
+          <div>
+            <button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</button> 
+            <p style={{ fontSize: "8pt"}}> Randomly selects images from the provided number</p>
+          </div>
+          }
 
           { this.state.murderer ? console.log(`The murderer is ${this.state.murderer}`)  : null }
           
-          <AnalyzeMurdererButton handleAnalyzeImage={this.handleAnalyzeImage}/>
+          { this.state.gameStarted ? <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/> : null }
 
-          <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/>
+          { this.state.presignedImageUrls.length > 0 ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }
 
-          {/* { this.state.murdererAttributes ? <p>{ this.state.murdererAttributes.mainEmotion }</p> : null } */}
-
-
-          { this.state.presignedImageUrls ? <FaceImage imageURLs={this.state.presignedImageUrls} /> : null }
+          { this.state.isWon ? <h2>Well done!! You have found the murderer! Have you considered becoming a PI?</h2>  : null }
 
         </div>
       </div>

@@ -1,5 +1,7 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
+  padding: 30px;
+
 }
 
 .App-logo {
@@ -34,4 +36,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#murderer {
+  transition: all .7s ease-in;
+}
+
+#murderer.enlarge {
+  transform: scale(1.1);
 }
