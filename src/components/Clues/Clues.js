@@ -26,8 +26,6 @@ class Clues extends Component {
     })
   }
 
-
-
   handleClick = () => {
     this.createTextHints()
     this.setState({

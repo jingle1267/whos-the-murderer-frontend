@@ -6,9 +6,7 @@ import FaceImage from '../components/FaceImage/FaceImage';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
 import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
-// import parseImageJSON from '../api/parseImageJSON';
 import parseImageJSON1 from '../api/parseImageJSON1';
-
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
 
@@ -17,18 +15,27 @@ class HomePage extends Component {
   constructor(props){
     super(props);
     this.state = {
+      // presignedImageUrls : ["https://guess-who-images.s3.us-east-2.amazonaws.com/creepy_smile_guy?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=c8ebd2c5ee41d26bbc971a406e1eb7afafbe2a025999c5919223d4a5eaa02c4c&X-Amz-SignedHeaders=host", "https://guess-who-images.s3.us-east-2.amazonaws.com/male_sunglasses?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=cd003a73a24ca315bb227b3e5af624f9cd64ece62f0328811775dc6398b3eab2&X-Amz-SignedHeaders=host"],      
+      // murderer: "https://guess-who-images.s3.us-east-2.amazonaws.com/creepy_smile_guy?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=c8ebd2c5ee41d26bbc971a406e1eb7afafbe2a025999c5919223d4a5eaa02c4c&X-Amz-SignedHeaders=host",
+      // murdererAttributes : { 
+      //   mainEmotion : "joy",
+      //   features: ["Facial hair", "Hair", "Moustache"],
+      //   colors: []
+      // },
+
+
       presignedImageUrls : [],
       clues : [],
       imageNames : [],
       murderer: "",
       gameDifficulty: 0,
-      // murdererAttributes : {},
-
-      murdererAttributes : { 
-        mainEmotion : "sorrow",
-        features: ["Glasses", "Hair", "Moustache"],
-        colors: []
-      }
+      murdererAttributes : {},
+      isWon: false,
+        // murdererAttributes : { 
+        //   mainEmotion : "sorrow",
+        //   features: ["Glasses", "Hair", "Moustache"],
+        //   colors: []
+        // }
     }
   }
 
@@ -126,7 +133,20 @@ class HomePage extends Component {
     this.getCurrentGameImageURLs(currentGameImages)
   }
 
+  handleClickedImage = (ev) => {
+    let clickedImgUrl = ev.target.src
+    if (clickedImgUrl === this.state.murderer) {
+      this.setState({
+        isWon: true
+      })
+    } else {
+      // flip
+    }
+  }
+
+
   render() {
+    
     return (
       <div>
 
@@ -147,10 +167,11 @@ class HomePage extends Component {
 
           <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/>
 
-          {/* { this.state.murdererAttributes ? <p>{ this.state.murdererAttributes.mainEmotion }</p> : null } */}
+          { this.state.isWon ? <h1>Well done!! You have found the murderer! Have you considered becoming a PI?</h1>  : null }
+          
 
 
-          { this.state.presignedImageUrls ? <FaceImage imageURLs={this.state.presignedImageUrls} /> : null }
+          { this.state.presignedImageUrls ? <FaceImage imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} /> : null }
 
         </div>
       </div>
