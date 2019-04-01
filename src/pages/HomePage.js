@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import S3ImagesAPI from "../api/S3ImagesAPI"
 import GoogleVisionAPI from '../api/GoogleVisionAPI';
-import FaceImage from '../components/FaceImage/FaceImage';
+import ImagesList from '../components/ImagesList/ImagesList';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
 import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
@@ -80,8 +80,19 @@ class HomePage extends Component {
     })
   }
 
-  handleAnalyzeImage = () => {
-    GoogleVisionAPI.analyzeImage(this.state.murderer)
+  // handleAnalyzeImage = () => {
+  //   GoogleVisionAPI.analyzeImage(this.state.murderer)
+  //     .then((JSONresponse) => { 
+  //       console.log(JSONresponse)
+  //     let data = parseImageJSON1.parseData(JSONresponse)
+  //       this.setState({ 
+  //         murdererAttributes: data 
+  //       }) 
+  //       console.log(this.state.murdererAttributes)
+  //     })
+  // }
+  handleAnalyzeMurderer = (murdererURL) => {
+    GoogleVisionAPI.analyzeImage(murdererURL)
       .then((JSONresponse) => { 
         console.log(JSONresponse)
       let data = parseImageJSON1.parseData(JSONresponse)
@@ -124,6 +135,7 @@ class HomePage extends Component {
     this.setState({
       murderer: murderer
     })
+    this.handleAnalyzeMurderer(murderer)
   }
 
   selectImagesForCurrentGame = () => {
@@ -171,7 +183,7 @@ class HomePage extends Component {
           
 
 
-          { this.state.presignedImageUrls ? <FaceImage imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} /> : null }
+          { this.state.presignedImageUrls.length > 0 ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} murderer={this.state.murderer} /> : null }
 
         </div>
       </div>
