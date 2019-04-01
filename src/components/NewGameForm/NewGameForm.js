@@ -13,10 +13,9 @@ class NewGameForm extends Component {
       <div>
         <Form  onSubmit={this.handleSubmit.bind(this)}>
         <Form.Group controlId="num_faces">
-        Step 1 -  
             <Form.Label>How many faces?</Form.Label>
             <small> Enter a number</small>
-            <Form.Control style={{ width: "5%" }} />
+            <Form.Control style={{ width: "20%"}} />
           </Form.Group>
 
           <Button type="submit">
