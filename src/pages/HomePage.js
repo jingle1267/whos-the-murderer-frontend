@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import S3ImagesAPI from "../api/S3ImagesAPI"
-import GoogleVisionAPI from '../api/GoogleVisionAPI';
+// import GoogleVisionAPI from '../api/GoogleVisionAPI';
+import FixedGoogleVisionAPI from '../api/FixedGoogleVisionAPI';
+
 import ImagesList from '../components/ImagesList/ImagesList';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
@@ -94,8 +96,11 @@ class HomePage extends Component {
   //       console.log(this.state.murdererAttributes)
   //     })
   // }
+  
   handleAnalyzeMurderer = (murdererURL) => {
-    GoogleVisionAPI.analyzeImage(murdererURL)
+    FixedGoogleVisionAPI.analyzeImage(murdererURL)
+    // GoogleVisionAPI.analyzeImage(murdererURL)
+
       .then((JSONresponse) => { 
         console.log(JSONresponse)
       let data = parseImageJSON1.parseData(JSONresponse)
@@ -179,15 +184,13 @@ class HomePage extends Component {
 
 
   render() {
-    
+    // console.log(process.env.REACT_APP_GOOGLE_CLOUD_VISION_API_KEY)
     return (
       <div>
         <div>
 
           {/* <button onClick={this.getImageURLs}>Show ALL Images</button> 
           <p style={{ fontSize: "8pt"}}>(Gets Presigned URLS for all imagesnames in state)</p> */}
-
-
 
           { this.state.gameDifficulty ? null : <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> }
           <br/>

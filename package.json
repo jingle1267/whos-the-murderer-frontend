@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@google-cloud/vision": "^0.25.0",
     "aws-s3": "^2.0.5",
     "aws-sdk": "^2.429.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "dotenv": "^7.0.0",
+    "http2": "^3.3.7",
     "react": "^16.8.5",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-card-flip": "^0.6.0",

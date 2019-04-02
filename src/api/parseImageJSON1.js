@@ -74,12 +74,14 @@ function hasHair(jsonObject) {
 
 const parseData = (jsonResponse) => {
   console.log("====================")
-  console.log(jsonResponse.responses[0])  
-  let jsonObject = jsonResponse.responses[0]
-  grabMainEmotion(jsonObject)
-  grabColors(jsonObject)
-  hasHair(jsonObject)
-  getAdditionalAttributesAsArray(jsonObject)
+  // console.log(jsonResponse.responses[0])
+  console.log(jsonResponse.responses)
+
+  // let jsonObject = jsonResponse.responses
+  // grabMainEmotion(jsonObject)
+  // grabColors(jsonObject)
+  // hasHair(jsonObject)
+  // getAdditionalAttributesAsArray(jsonObject)
   return imageData
 } 
 
