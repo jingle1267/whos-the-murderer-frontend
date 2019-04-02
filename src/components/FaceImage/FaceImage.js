@@ -23,11 +23,11 @@ class FaceImage extends Component {
   handleWinningGuess = () => {
     if (this.props.imageURL === this.props.murderer) {
       return <Col lg={6} xl={4} >
-      <Image src={this.props.imageURL} roundedCircle  id="murderer" className="enlarge" style={{ maxHeight: "35vh", border: "solid 15px black" }}/> 
+      <Image src={this.props.imageURL} roundedCircle  id="murderer" className="enlarge" style={{ maxHeight: "30vh", border: "solid 15px black" }}/> 
     </Col> 
     } else {
       return <Col lg={6} xl={4} >
-      <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "35vh", border: "solid 15px grey", opacity: "0.5" }}/> 
+      <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "30vh", border: "solid 15px grey", opacity: "0.5" }}/> 
     </Col> 
     }
   }
@@ -42,10 +42,10 @@ class FaceImage extends Component {
         { this.props.isWon ? this.handleWinningGuess() :
           <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
             <Col lg={6} xl={4} key="front" >
-              <Image onClick={this.handleClick} src={this.props.imageURL} roundedCircle style={{ maxHeight: "35vh", border: "solid 15px grey" }}/>
+              <Image onClick={this.handleClick} src={this.props.imageURL} roundedCircle style={{ maxHeight: "30vh", border: "solid 15px grey" }}/>
             </Col>
             <Col lg={6} xl={4} key="back" >
-              <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "35vh", border: "solid 15px grey", opacity: "0.5" }}/> 
+              <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "30vh", border: "solid 15px grey", opacity: "0.5" }}/> 
             </Col>         
           </ReactCardFlip>
           }
