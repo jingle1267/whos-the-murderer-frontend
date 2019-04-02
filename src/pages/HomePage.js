@@ -7,8 +7,8 @@ import FixedGoogleVisionAPI from '../api/FixedGoogleVisionAPI';
 import ImagesList from '../components/ImagesList/ImagesList';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
-// import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
-import parseImageJSON1 from '../api/parseImageJSON1';
+import AnalyzeMurdererButton from '../components/AnalyzeMurdererButton/AnalyzeMurdererButton';
+import parseImageJSON from '../api/parseImageJSON';
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
 import PlayAgainButton from '../components/PlayAgainButton/PlayAgainButton';
@@ -28,13 +28,6 @@ class HomePage extends Component {
       //   features: ["Facial hair", "Hair", "Moustache"],
       //   colors: []
       // },
-
-
-      // murdererAttributes : { 
-        //   mainEmotion : "sorrow",
-        //   features: ["Glasses", "Hair", "Moustache"],
-        //   colors: []
-        // }
         presignedImageUrls : [],
         clues : [],
         imageNames : [],
@@ -85,31 +78,32 @@ class HomePage extends Component {
     })
   }
 
-  // handleAnalyzeImage = () => {
-  //   GoogleVisionAPI.analyzeImage(this.state.murderer)
-  //     .then((JSONresponse) => { 
-  //       console.log(JSONresponse)
-  //     let data = parseImageJSON1.parseData(JSONresponse)
-  //       this.setState({ 
-  //         murdererAttributes: data 
-  //       }) 
-  //       console.log(this.state.murdererAttributes)
-  //     })
-  // }
-  
-  handleAnalyzeMurderer = (murdererURL) => {
-    FixedGoogleVisionAPI.analyzeImage(murdererURL)
-    // GoogleVisionAPI.analyzeImage(murdererURL)
-
+  handleAnalyzeImage = () => {
+    FixedGoogleVisionAPI.analyzeImage(this.state.murderer)
       .then((JSONresponse) => { 
         console.log(JSONresponse)
-      let data = parseImageJSON1.parseData(JSONresponse)
+      let data = parseImageJSON.parseData(JSONresponse)
         this.setState({ 
-          murdererAttributes: data 
+          murdererAttributes: data,
+          gameStarted : true
         }) 
         console.log(this.state.murdererAttributes)
       })
   }
+  
+  // handleAnalyzeMurderer = (murdererURL) => {
+  //   FixedGoogleVisionAPI.analyzeImage(murdererURL)
+  //   // GoogleVisionAPI.analyzeImage(murdererURL)
+
+  //     .then((JSONresponse) => { 
+  //       console.log(JSONresponse)
+  //     let data = parseImageJSON.parseData(JSONresponse)
+  //       this.setState({ 
+  //         murdererAttributes: data
+  //       }) 
+  //       console.log(this.state.murdererAttributes)
+  //     })
+  // }
   
   handleGameDifficulty = (event) => {
     const num_faces = event.target.elements[0].value
@@ -131,7 +125,8 @@ class HomePage extends Component {
       imageURLs.push(url)
     }
     this.setState({
-      presignedImageUrls: imageURLs
+      presignedImageUrls: imageURLs,
+      // gameStarted : true,
     })
     this.handleChooseMurderer(imageURLs)
   }
@@ -142,9 +137,9 @@ class HomePage extends Component {
     var murderer = currentGameImages[Math.floor(Math.random()*currentGameImages.length)];
     this.setState({
       murderer: murderer,
-      gameStarted : true
+      // gameStarted : true
     })
-    this.handleAnalyzeMurderer(murderer)
+    // this.handleAnalyzeMurderer(murderer) //ADD BACK IN FOR INSTANTANIOUS ANALYZING
   }
 
   selectImagesForCurrentGame = () => {
@@ -195,12 +190,22 @@ class HomePage extends Component {
           { this.state.gameDifficulty ? null : <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> }
           <br/>
 
-          { this.state.gameStarted ? null :
-          <div>
-            <Button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</Button> 
-            {/* <p style={{ fontSize: "8pt"}}> Randomly selects images from the provided number</p> */}
-          </div>
+          {/* { this.state.gameStarted ? null : */}
+          {/* // <div> */}
+            {/* <Button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</Button>  */}
+            {/* <Button onClick={this.selectImagesForCurrentGame}>Analyze Murderer</Button>  */}
+          {/* </div> */}
+          {/* // } */}
+
+          { this.state.gameDifficulty ?           <div>
+            {/* <Button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</Button>  */}
+            <Button onClick={this.selectImagesForCurrentGame}>Analyze Murderer</Button> 
+          </div> : null
           }
+
+          {/* { this.state.murderer  ? <AnalyzeMurdererButton handleAnalyzeImage={this.handleAnalyzeImage}/>  : null } */}
+          { this.state.murderer ? <AnalyzeMurdererButton handleAnalyzeImage={this.handleAnalyzeImage}/>  : null }
+
 
           { this.state.murderer ? console.log(`The murderer is ${this.state.murderer}`)  : null }
           
@@ -208,7 +213,9 @@ class HomePage extends Component {
 
           { this.state.guessAgain ? <p className="guess-again">Nope - guess again!</p> : null }
 
-          { this.state.presignedImageUrls.length > 0 ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }
+          {/* { this.state.presignedImageUrls.length > 0 ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null } */}
+
+          { this.state.gameStarted ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }          
 
           { this.state.isWon ? <div><PlayAgainButton handlePlayAgain={this.handlePlayAgain} /></div>  : null }
 

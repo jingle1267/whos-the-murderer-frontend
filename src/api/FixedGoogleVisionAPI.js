@@ -1,13 +1,12 @@
 const analyzeImage = async (imageURL) => {
-  // console.log(process.env.REACT_APP_GOOGLE_CLOUD_VISION_API_KEY)
   try {
     let body = JSON.stringify({
       requests: [
         {
           features: [
-            { type: "LABEL_DETECTION", maxResults: 10 },
-            { type: "FACE_DETECTION", maxResults: 5 },
-            { type: "IMAGE_PROPERTIES", maxResults: 5 },
+            { type: "LABEL_DETECTION", maxResults: 15 },
+            { type: "FACE_DETECTION" },
+            { type: "IMAGE_PROPERTIES" },
           ],
           image: {
             source: {
@@ -28,9 +27,10 @@ const analyzeImage = async (imageURL) => {
         method: "POST",
         body: body
       }
-    );
+    )
     let responseJson = await response.json();
-    console.log(responseJson);
+    // console.log(responseJson)
+    return responseJson
   } catch (error) {
     console.log(error);
   }

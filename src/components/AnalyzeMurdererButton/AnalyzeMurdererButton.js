@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Form, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class AnalyzeMurdererButton extends Component {
 
@@ -11,10 +11,7 @@ class AnalyzeMurdererButton extends Component {
   render() {
     return (
       <div>
-        Step 3 - 
-        <button onClick={this.handleSubmit.bind(this)}>Analyze murderer</button>
-
-        
+        <Button onClick={this.handleSubmit.bind(this)}>PLAY GAME!</Button>
       </div>
     );
   }
