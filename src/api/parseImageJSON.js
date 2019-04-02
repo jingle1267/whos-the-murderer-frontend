@@ -27,7 +27,6 @@ function grabMainEmotion(jsonObject) {
   } else if (emotion.surpriseLikelihood === "VERY_LIKELY" || emotion.surpriseLikelihood === "POSSIBLE" || emotion.surpriseLikelihood === "LIKELY") {
     imageData.mainEmotion = "surprise"
   } else if (emotion.headwearLikelihood === "VERY_LIKELY" || emotion.headwearLikelihood === "POSSIBLE" || emotion.headwearLikelihood === "LIKELY") {
-    // imageData.features.push('hat')
     imageData.mainEmotion = "hat"
   }
 }

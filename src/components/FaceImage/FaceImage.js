@@ -33,9 +33,7 @@ class FaceImage extends Component {
   }
 
   render() {
-    
-    console.log(this.props.isWon)
-
+    // console.log(this.props.isWon)
     return (
       <div>
 
