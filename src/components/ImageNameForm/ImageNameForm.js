@@ -7,28 +7,29 @@ class ImageNameForm extends Component {
 
   handleSaveImageName = (ev) => {
     ev.preventDefault()
-    // const imageName = ev.target.elements[0].value
-
     const imageName = {
       image_name: ev.target.elements[0].value,
     }
-
-    console.log(imageName)
+    ev.target.reset()
     ImageNamesAPI.addImage(imageName)
       .then((response) => {
-      console.log(response)
+        if (response.status === 201) {
+          this.props.handleSaveImageName(imageName)
+        } else {
+          alert("Name must be unique please try again.")
+        }
       })
   }
 
-
   render() {
     return (
-      <div>
+      <div className="FileUpload">
         <Form  onSubmit={this.handleSaveImageName.bind(this)}>
         <Form.Group>
-            {/* <Form.Label>How many faces?</Form.Label> */}
-            {/* <small> Enter a number</small> */}
-            <Form.Control style={{ width: "50%"}} />
+            <Form.Label>Please choose a name for the image.</Form.Label>
+            <br/>
+            <small>Must be unique!</small>
+            <Form.Control defaultValue={ null } />
           </Form.Group>
 
           <Button type="submit">
