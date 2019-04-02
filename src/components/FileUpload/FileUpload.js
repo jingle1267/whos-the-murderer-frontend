@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import S3ImagesAPI from "../../api/S3ImagesAPI"
+import ImageNameForm from "../ImageNameForm/ImageNameForm"
 
 class FileUpload extends Component {
   constructor(props){
@@ -14,6 +15,7 @@ class FileUpload extends Component {
     this.setState({success: false, url : ""});
     
   }
+
 
   handleUpload_AWS_SDK = (ev) => {
     let file = this.uploadInput.files[0];
@@ -33,14 +35,7 @@ class FileUpload extends Component {
       console.log(data.Location);
       console.log(data.Key);
     })
-  // .then(response => {
-  //   // var returnData = response.data.data.returnData;
-  //   var url = response.location;
-  //   // var signedRequest = response.signedRequest;
-  //   console.log(response)
-  //   console.log(url)
     this.setState({
-      // url: url,
       success: true,
     })
   // })
@@ -52,13 +47,13 @@ class FileUpload extends Component {
     const SuccessMessage = () => (
       <div style={{padding:50}}>
         <h3 style={{color: 'green'}}>SUCCESSFULLY UPLOADED!</h3>
-        {/* <a href={this.state.url}>Access the file here</a> */}
         <br/>
       </div>
     )
-
     return (
       <div className="FileUpload">
+
+      <ImageNameForm />
         <center>
           <h3>Submit a face</h3>
           {this.state.success ? <SuccessMessage/> : null}
@@ -66,10 +61,6 @@ class FileUpload extends Component {
           <br/>
           <button onClick={this.handleUpload_AWS_SDK}>UPLOAD</button>
         </center>
-
-        <div>
-          {/* <img src={this.state.url} alt=""></img> */}
-        </div>
       </div>
 
     );
