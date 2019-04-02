@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
-class AnalyzeMurdererButton extends Component {
+class PlayGameButton extends Component {
 
   handleSubmit(event){
     event.preventDefault();
@@ -17,4 +17,4 @@ class AnalyzeMurdererButton extends Component {
   }
 }
 
-export default AnalyzeMurdererButton;
+export default PlayGameButton;
