@@ -17,8 +17,8 @@ import ImageNameForm from '../components/ImageNameForm/ImageNameForm';
 
 class UploadImagePage extends Component {
   state = {
-    // imageName : null
-    imageName : "surprised_mustache.jpeg"
+    imageName : null
+    // imageName : "surprised_mustache.jpeg"
   }
 
   handleSaveImageName = (imageName) => {
