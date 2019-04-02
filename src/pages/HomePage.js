@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import S3ImagesAPI from "../api/S3ImagesAPI"
-// import GoogleVisionAPI from '../api/GoogleVisionAPI';
 import FixedGoogleVisionAPI from '../api/FixedGoogleVisionAPI';
 
 import ImagesList from '../components/ImagesList/ImagesList';

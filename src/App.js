@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-// import GoogleVisionAPI from './api/GoogleVisionAPI';
-import FileUpload from './components/FileUpload/FileUpload';
 import HomePage from './pages/HomePage';
+import UploadImagePage from './pages/UploadImagePage';
 import './App.css';
 
 class App extends Component {
@@ -17,7 +16,8 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/upload-file" component={FileUpload} />
+            {/* <Route exact path="/upload-file" component={FileUpload} /> */}
+            <Route exact path="/upload-file" component={UploadImagePage} />
           </div>
         </BrowserRouter>
 
