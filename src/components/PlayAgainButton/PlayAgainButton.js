@@ -11,9 +11,10 @@ class PlayAgainButton extends Component {
   render() {
     return (
       <div className="won-message">
+      {/* <div className="overlay"> */}
         <h4>Well done!! You have found the murderer! Have you considered becoming a PI?</h4>
         <br />
-        <Button onClick={this.handleSubmit.bind(this)}>Play Again?</Button>
+        <button onClick={this.handleSubmit.bind(this)}>Play Again?</button>
       </div>
     );
   }

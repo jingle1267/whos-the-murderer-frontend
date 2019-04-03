@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import ImageNamesAPI from '../../api/djangoAPI/ImageNamesAPI';
 
 
@@ -24,18 +24,33 @@ class ImageNameForm extends Component {
   render() {
     return (
       <div className="FileUpload">
-        <Form  onSubmit={this.handleSaveImageName.bind(this)}>
-        <Form.Group>
-            <Form.Label>Please choose a name for the image.</Form.Label>
-            <br/>
-            <small>Must be unique!</small>
-            <Form.Control defaultValue={ null } />
-          </Form.Group>
+        <Container>
+          <Row>
+            <Col md={{ span: 6, offset: 3 }}>
 
-          <Button type="submit">
-            Save Image Name
-          </Button>
-        </Form>
+                  <Form.Label>Please choose a name for the image.</Form.Label>
+                  
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{ span: 4, offset: 4 }}>
+            <Form  onSubmit={this.handleSaveImageName.bind(this)}>
+              <Form.Group>
+                  {/* <Form.Label>Please choose a name for the image.</Form.Label> */}
+                  {/* <br/> */}
+                  <small>Must be unique!</small>
+                  <Form.Control defaultValue={ null } />
+                </Form.Group>
+
+                <button type="submit">
+                  Next
+                </button>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+
+
         
       </div>
     );
