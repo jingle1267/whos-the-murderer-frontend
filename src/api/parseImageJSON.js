@@ -11,7 +11,7 @@ const possibleAttributes = [
 const possibleHeadwear = ["Hat", "Beanie", "Cap"]
 
 let imageData = {
-  mainEmotion : "",
+  mainEmotion : null,
   features: [],
   colors: [],
 }
@@ -27,7 +27,6 @@ function grabMainEmotion(jsonObject) {
   } else if (emotion.surpriseLikelihood === "VERY_LIKELY" || emotion.surpriseLikelihood === "POSSIBLE" || emotion.surpriseLikelihood === "LIKELY") {
     imageData.mainEmotion = "surprise"
   } else if (emotion.headwearLikelihood === "VERY_LIKELY" || emotion.headwearLikelihood === "POSSIBLE" || emotion.headwearLikelihood === "LIKELY") {
-    // imageData.features.push('hat')
     imageData.mainEmotion = "hat"
   }
 }
@@ -73,12 +72,6 @@ function hasHair(jsonObject) {
 }
 
 const parseData = (responseJson) => {
-
-  // console.log(responseJson.responses)
-  // console.log("====================")
-  // console.log(responseJson.responses[0])
-  // console.log(responseJson.responses[0].labelAnnotations)
-
   let jsonObject = responseJson.responses[0]
   grabMainEmotion(jsonObject)
   grabColors(jsonObject)
@@ -87,6 +80,19 @@ const parseData = (responseJson) => {
   return imageData
 } 
 
+const isImageValid = (responseJson) => {
+  let imageData = parseData(responseJson)
+  console.log(imageData)
+  if (!imageData.mainEmotion) {
+    return false
+  } else if (imageData.features.length < 1) {
+    return false
+  } else {
+    return true
+  }
+}
+
 export default {
-  parseData: parseData
+  parseData: parseData,
+  isImageValid: isImageValid
 }

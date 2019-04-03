@@ -6,7 +6,7 @@ import FixedGoogleVisionAPI from '../api/FixedGoogleVisionAPI';
 import ImagesList from '../components/ImagesList/ImagesList';
 import ImageNamesAPI from '../api/djangoAPI/ImageNamesAPI';
 import NewGameForm from '../components/NewGameForm/NewGameForm';
-import PlayGameButton from '../components/PlayGameButton/PlayGameButton';
+// import PlayGameButton from '../components/PlayGameButton/PlayGameButton';
 import parseImageJSON from '../api/parseImageJSON';
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
@@ -18,8 +18,6 @@ class HomePage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      // presignedImageUrls : ["https://guess-who-images.s3.us-east-2.amazonaws.com/creepy_smile_guy?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=c8ebd2c5ee41d26bbc971a406e1eb7afafbe2a025999c5919223d4a5eaa02c4c&X-Amz-SignedHeaders=host", "https://guess-who-images.s3.us-east-2.amazonaws.com/male_sunglasses?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=cd003a73a24ca315bb227b3e5af624f9cd64ece62f0328811775dc6398b3eab2&X-Amz-SignedHeaders=host"],      
-      // murderer: "https://guess-who-images.s3.us-east-2.amazonaws.com/creepy_smile_guy?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJYMH6IJIYMY6RJVA%2F20190401%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190401T155015Z&X-Amz-Expires=1800&X-Amz-Signature=c8ebd2c5ee41d26bbc971a406e1eb7afafbe2a025999c5919223d4a5eaa02c4c&X-Amz-SignedHeaders=host",
       // murdererAttributes : { 
       //   mainEmotion : "joy",
       //   features: ["Facial hair", "Hair", "Moustache"],
@@ -50,6 +48,9 @@ class HomePage extends Component {
           imageNames: imageNames
         })
     })
+      .catch((error) => {
+        console.log(error)
+      })
     CluesAPI.fetchClues()
       .then((apiResponseJSON) => {
         clues.push(apiResponseJSON)
@@ -57,6 +58,10 @@ class HomePage extends Component {
           clues: clues[0]
         })
     })
+      .catch((error) => {
+        console.log(error)
+      })
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
   }
 
   getImageURLs = () => {
@@ -75,8 +80,24 @@ class HomePage extends Component {
     })
   }
 
-  handleAnalyzeImage = () => {
-    FixedGoogleVisionAPI.analyzeImage(this.state.murderer)
+  // handleAnalyzeImage = () => {
+  //   FixedGoogleVisionAPI.analyzeImage(this.state.murderer)
+  //     .then((JSONresponse) => { 
+  //       console.log(JSONresponse)
+  //     let data = parseImageJSON.parseData(JSONresponse)
+  //       this.setState({ 
+  //         murdererAttributes: data,
+  //         gameStarted : true,
+  //         shouldHide: true
+  //       }) 
+  //       console.log(this.state.murdererAttributes)
+  //     }).catch((error) => {
+  //       console.log(error)
+  //     })
+  // }
+  
+  handleAnalyzeMurderer = (murdererURL) => {
+    FixedGoogleVisionAPI.analyzeImage(murdererURL)
       .then((JSONresponse) => { 
         console.log(JSONresponse)
       let data = parseImageJSON.parseData(JSONresponse)
@@ -87,25 +108,13 @@ class HomePage extends Component {
         }) 
         console.log(this.state.murdererAttributes)
       })
+      .catch((error) => {
+        console.log(error)
+      })
   }
-  
-  // handleAnalyzeMurderer = (murdererURL) => {
-  //   FixedGoogleVisionAPI.analyzeImage(murdererURL)
-  //   // GoogleVisionAPI.analyzeImage(murdererURL)
-
-  //     .then((JSONresponse) => { 
-  //       console.log(JSONresponse)
-  //     let data = parseImageJSON.parseData(JSONresponse)
-  //       this.setState({ 
-  //         murdererAttributes: data
-  //       }) 
-  //       console.log(this.state.murdererAttributes)
-  //     })
-  // }
   
   handleGameDifficulty = (event) => {
     const num_faces = event.target.elements[0].value
-    console.log(num_faces)
     this.setState({ 
       gameDifficulty: num_faces 
     })
@@ -131,9 +140,9 @@ class HomePage extends Component {
     console.log(currentGameImages)
     var murderer = currentGameImages[Math.floor(Math.random()*currentGameImages.length)];
     this.setState({
-      murderer: murderer,
+      murderer: murderer
     })
-    // this.handleAnalyzeMurderer(murderer) //ADD BACK IN FOR INSTANTANIOUS ANALYZING
+    this.handleAnalyzeMurderer(murderer)
   }
 
   selectImagesForCurrentGame = () => {
@@ -159,8 +168,6 @@ class HomePage extends Component {
   handlePlayAgain = (ev) => {
     this.setState({
       presignedImageUrls : [],
-      clues : [],
-      // imageNames : [],
       murderer: "",
       gameDifficulty: 0,
       murdererAttributes : {},
@@ -181,21 +188,17 @@ class HomePage extends Component {
           <p style={{ fontSize: "8pt"}}>(Gets Presigned URLS for all imagesnames in state)</p> */}
 
           { this.state.gameDifficulty ? null : <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> }
-          {/* { this.state.imageNames ? <div className={ this.state.gameDifficulty ? 'hidden' : '' } > <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> </div> : null } */}
-
           <br/>
-
-
 
           { this.state.gameDifficulty ?           
             <div className={ this.state.murderer ? 'hidden' : ''} >
-              <Button onClick={this.selectImagesForCurrentGame}>Analyze Murderer</Button> 
+              <Button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</Button> 
             </div> : null
           }
 
-          { this.state.murderer ? <div className={ this.state.shouldHide ? 'hidden' : ''} ><PlayGameButton handleAnalyzeImage={this.handleAnalyzeImage}/></div>  : null }
+          {/* { this.state.murderer ? <div className={ this.state.shouldHide ? 'hidden' : ''} ><PlayGameButton handleAnalyzeImage={this.handleAnalyzeImage}/></div>  : null } */}
 
-          { this.state.murderer ? console.log(`The murderer is ${this.state.murderer}`)  : null }
+          { this.state.murderer ? console.log(`The murderer is ${this.state.murderer}`) : null }
           
           { this.state.gameStarted ? <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/> : null }
 
@@ -203,7 +206,7 @@ class HomePage extends Component {
 
           { this.state.gameStarted ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }          
 
-          { this.state.isWon ? <div><PlayAgainButton handlePlayAgain={this.handlePlayAgain} /></div>  : null }
+          { this.state.isWon ? <div><PlayAgainButton handlePlayAgain={this.handlePlayAgain} /></div> : null }
           
         </div>
       </div>
@@ -212,28 +215,3 @@ class HomePage extends Component {
 }
 
 export default HomePage;
-
-          
-    /* <button onClick={this.listBucketContents}>List All Objects in Bucket</button> */
-  // listBucketContents = () => {
-  //   let imageNames = []
-  //   let response = {}
-  //   var params = {
-  //     Bucket: "guess-who-images", 
-  //     MaxKeys: 9
-  //   };
-  //   S3ImagesAPI.s3.listObjects(params, function(err, data) {
-  //     if (err) {
-  //       console.log(err, err.stack)
-  //     } else  {
-  //       console.log(data);
-  //       response = data
-  //       for (let element of response.Contents){
-  //         imageNames.push(element["Key"])
-  //       }}
-  //       console.log(imageNames);
-  //     })
-  //   this.setState({
-  //     imageNames: imageNames
-  //   })
-  // }
