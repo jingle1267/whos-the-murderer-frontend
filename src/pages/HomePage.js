@@ -61,6 +61,7 @@ class HomePage extends Component {
       .catch((error) => {
         console.log(error)
       })
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
   }
 
   getImageURLs = () => {
@@ -214,28 +215,3 @@ class HomePage extends Component {
 }
 
 export default HomePage;
-
-          
-    /* <button onClick={this.listBucketContents}>List All Objects in Bucket</button> */
-  // listBucketContents = () => {
-  //   let imageNames = []
-  //   let response = {}
-  //   var params = {
-  //     Bucket: "guess-who-images", 
-  //     MaxKeys: 9
-  //   };
-  //   S3ImagesAPI.s3.listObjects(params, function(err, data) {
-  //     if (err) {
-  //       console.log(err, err.stack)
-  //     } else  {
-  //       console.log(data);
-  //       response = data
-  //       for (let element of response.Contents){
-  //         imageNames.push(element["Key"])
-  //       }}
-  //       console.log(imageNames);
-  //     })
-  //   this.setState({
-  //     imageNames: imageNames
-  //   })
-  // }

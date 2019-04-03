@@ -11,7 +11,7 @@ const possibleAttributes = [
 const possibleHeadwear = ["Hat", "Beanie", "Cap"]
 
 let imageData = {
-  mainEmotion : "",
+  mainEmotion : null,
   features: [],
   colors: [],
 }
@@ -72,12 +72,6 @@ function hasHair(jsonObject) {
 }
 
 const parseData = (responseJson) => {
-
-  // console.log(responseJson.responses)
-  // console.log("====================")
-  // console.log(responseJson.responses[0])
-  // console.log(responseJson.responses[0].labelAnnotations)
-
   let jsonObject = responseJson.responses[0]
   grabMainEmotion(jsonObject)
   grabColors(jsonObject)
@@ -86,6 +80,19 @@ const parseData = (responseJson) => {
   return imageData
 } 
 
+const isImageValid = (responseJson) => {
+  let imageData = parseData(responseJson)
+  console.log(imageData)
+  if (!imageData.mainEmotion) {
+    return false
+  } else if (imageData.features.length < 1) {
+    return false
+  } else {
+    return true
+  }
+}
+
 export default {
-  parseData: parseData
+  parseData: parseData,
+  isImageValid: isImageValid
 }

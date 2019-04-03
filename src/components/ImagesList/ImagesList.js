@@ -22,28 +22,14 @@ class ImagesList extends Component {
     this.props.handleClickedImage(event)
   }
 
-  // componentDidUpdate = () => {
-  //   if (this.props.isWon) {
-  //     this.setState({ 
-  //       isFlipped: true 
-  //     })
-  //   }
-  // }
-
-
-
   render() {
-
     return (
       <div>
         <Container>
-        <Row>
-
-        { this.createImageCircles() }
-
+          <Row>
+            { this.createImageCircles() }
           </Row>
         </Container>
-        
       </div>
     );
   }
