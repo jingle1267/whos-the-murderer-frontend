@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import { Row, Container } from 'react-bootstrap';
 import FaceImage from '../FaceImage/FaceImage'
 
-
-
 class ImagesList extends Component {
-  // state = {
-  //   isFlipped: false
-  // };
 
   createImageCircles() {
     let images = Object.values(this.props.imageURLs)
@@ -25,12 +20,16 @@ class ImagesList extends Component {
   render() {
     return (
       <div>
+
+            <center>
         <Container>
           <Row>
             { this.createImageCircles() }
           </Row>
-        </Container>
+        </Container> 
+            </center>
       </div>
+
     );
   }
 }

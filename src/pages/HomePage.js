@@ -13,6 +13,15 @@ import Clues from '../components/Clues/Clues'
 import PlayAgainButton from '../components/PlayAgainButton/PlayAgainButton';
 import { Button } from 'react-bootstrap';
 
+// import { css } from '@emotion/core';
+// // First way to import
+// import { PacmanLoader } from 'react-spinners';
+
+// const override = css`
+//     display: block;
+//     margin: 0 auto;
+//     border-color: red;
+// `;
 
 class HomePage extends Component {
   constructor(props){
@@ -33,6 +42,7 @@ class HomePage extends Component {
         gameStarted: false,
         guessAgain: false,
         hidden: false,
+        // loading: true
       }
   }
 
@@ -61,6 +71,9 @@ class HomePage extends Component {
       .catch((error) => {
         console.log(error)
       })
+    //   setTimeout(function() { //Start the timer
+    //     this.setState({loading: false}) //After 1 second, set render to true
+    // }.bind(this), 2000)
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
   }
 
@@ -100,7 +113,7 @@ class HomePage extends Component {
     FixedGoogleVisionAPI.analyzeImage(murdererURL)
       .then((JSONresponse) => { 
         console.log(JSONresponse)
-      let data = parseImageJSON.parseData(JSONresponse)
+        let data = parseImageJSON.parseData(JSONresponse)
         this.setState({ 
           murdererAttributes: data,
           gameStarted : true,
@@ -142,7 +155,10 @@ class HomePage extends Component {
     this.setState({
       murderer: murderer
     })
-    this.handleAnalyzeMurderer(murderer)
+    setTimeout(function() { //Start the timer
+      this.setState({loading: false}) //After 1 second, set render to true
+      this.handleAnalyzeMurderer(murderer)
+    }.bind(this), 1000)
   }
 
   selectImagesForCurrentGame = () => {
@@ -174,15 +190,24 @@ class HomePage extends Component {
       isWon: false,
       gameStarted: false,
       guessAgain: false,
-      shouldHide : false
+      shouldHide : false,
+      // loading: true
     })
   }
-
 
   render() {
     return (
       <div>
         <div>
+        {/* { this.state.loading ?         
+        <PacmanLoader
+          css={override}
+          sizeUnit={"px"}
+          size={10}
+          color={'#123abc'}
+          loading={this.state.loading}
+        /> : <div> */}
+
 
           {/* <button onClick={this.getImageURLs}>Show ALL Images</button> 
           <p style={{ fontSize: "8pt"}}>(Gets Presigned URLS for all imagesnames in state)</p> */}
@@ -192,7 +217,7 @@ class HomePage extends Component {
 
           { this.state.gameDifficulty ?           
             <div className={ this.state.murderer ? 'hidden' : ''} >
-              <Button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</Button> 
+              <button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</button> 
             </div> : null
           }
 
@@ -202,13 +227,18 @@ class HomePage extends Component {
           
           { this.state.gameStarted ? <Clues clues={this.state.clues} murdererAttributes={this.state.murdererAttributes}/> : null }
 
-          { this.state.guessAgain ? <p className="guess-again">Nope - guess again!</p> : null }
+          { this.state.guessAgain ? <p className="guess-again">Nope - guess again!</p> : <div style={{ marginBottom: "32px"}} ></div> }
 
+          
+          
           { this.state.gameStarted ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }          
 
           { this.state.isWon ? <div><PlayAgainButton handlePlayAgain={this.handlePlayAgain} /></div> : null }
+          </div>
+{/* 
+        }
           
-        </div>
+        </div> */}
       </div>
     );
   }

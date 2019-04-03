@@ -28,8 +28,6 @@ const addImage = (imageName) => {
 //   })
 // }
 
-// DELETE lenght minus 1
-
 export default {
   addImage: addImage,
   fetchImages: fetchImages

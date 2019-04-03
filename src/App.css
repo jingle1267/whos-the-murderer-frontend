@@ -1,52 +1,49 @@
 .App {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
   /* justify-content: center;  */
   /* vertically */
   text-align: center;
-  /* padding: 30px; */
+  /* padding: 0px 30px; */
   min-height: 100vh;
+  /* min-height: 800px; */
+
   min-width: 100vw;
+  font-family: 'Montserrat'
 
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.App-body {
+  padding: 0px 30px;
+  /* min-height: 100vh;
+  min-width: 80vw; */
 }
-
-/* .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
-
-.App-link {
-  color: #61dafb;
+.hint-title {
+  /* font-size: 0.8em; */
+  margin-bottom: 80px;
+  
 }
 
 .hint-text {
-  font-size: 0.8em
+  font-size: 0.8em;
+  font-weight: 200;
+  margin-top: -50px;
+  margin-bottom: 30px;
+}
+.hint-end {
+  /* font-size: 0.8em; */
+  margin-bottom: 80px
 }
 
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+.guess-again {
+  font-size: 0.8em;
+  font-weight: 500;
+  margin-top: -18px;
+}
 
 #murderer {
-  transition: all .7s ease-in;
+  /* transition: all .7s ease-in; */
 }
 
 /* #murderer.enlarge {
@@ -58,7 +55,7 @@
 } */
 
 .FileUpload {
-  margin-top: 20vh;
+  margin-top: 5vh;
 }
 
 .won-message {
@@ -74,9 +71,62 @@
   justify-content: center;
   position: absolute;
   margin-top: -100vh;
-  margin-left: -40vh;
+  /* margin-top: -400px; */
+
+  /* margin-left: -40vh; */
+}
+
+.overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(189, 105, 105, 0.5); /* Black background with opacity */
+  z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
 }
 
 .hidden {
   display: none
+}
+
+button {
+  font-size: 10pt;
+  text-decoration: none !important;
+  color: #005c99;
+  border: solid 2px #005c99;
+  padding: 5px;
+  margin-right: 5px
+}
+
+button:hover {
+  color: white;
+  background-color: #005c99;
+  border: solid 2px #005c99;
+}
+
+.NavBar {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 4em;
+  color: black
+}
+.NavBar:hover {
+  color: #005c99
+}
+
+.links {
+  /* color: rgba(48, 48, 48, 0.863); */
+  /* padding: 10px */
+  color: #005c99;
+
+}
+
+.links:hover {
+  text-decoration: none;
+  color: white;
 }
