@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 
 class PlayAgainButton extends Component {
 
@@ -11,8 +10,7 @@ class PlayAgainButton extends Component {
   render() {
     return (
       <div className="won-message">
-      {/* <div className="overlay"> */}
-        <h4>Well done!! You have found the murderer! Have you considered becoming a PI?</h4>
+        <h4 className="message">Well done!! You have found the murderer! Have you considered becoming a PI?</h4>
         <br />
         <button onClick={this.handleSubmit.bind(this)}>Play Again?</button>
       </div>

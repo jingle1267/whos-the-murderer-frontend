@@ -11,27 +11,12 @@ import parseImageJSON from '../api/parseImageJSON';
 import CluesAPI from '../api/djangoAPI/CluesAPI';
 import Clues from '../components/Clues/Clues'
 import PlayAgainButton from '../components/PlayAgainButton/PlayAgainButton';
-import { Button } from 'react-bootstrap';
 
-// import { css } from '@emotion/core';
-// // First way to import
-// import { PacmanLoader } from 'react-spinners';
-
-// const override = css`
-//     display: block;
-//     margin: 0 auto;
-//     border-color: red;
-// `;
 
 class HomePage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      // murdererAttributes : { 
-      //   mainEmotion : "joy",
-      //   features: ["Facial hair", "Hair", "Moustache"],
-      //   colors: []
-      // },
         presignedImageUrls : [],
         clues : [],
         imageNames : [],
@@ -74,7 +59,6 @@ class HomePage extends Component {
     //   setTimeout(function() { //Start the timer
     //     this.setState({loading: false}) //After 1 second, set render to true
     // }.bind(this), 2000)
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
   }
 
   getImageURLs = () => {
@@ -158,7 +142,7 @@ class HomePage extends Component {
     setTimeout(function() { //Start the timer
       this.setState({loading: false}) //After 1 second, set render to true
       this.handleAnalyzeMurderer(murderer)
-    }.bind(this), 1000)
+    }.bind(this), 800)
   }
 
   selectImagesForCurrentGame = () => {
@@ -186,7 +170,7 @@ class HomePage extends Component {
       presignedImageUrls : [],
       murderer: "",
       gameDifficulty: 0,
-      murdererAttributes : {},
+      murdererAttributes : null,
       isWon: false,
       gameStarted: false,
       guessAgain: false,
@@ -209,8 +193,7 @@ class HomePage extends Component {
         /> : <div> */}
 
 
-          {/* <button onClick={this.getImageURLs}>Show ALL Images</button> 
-          <p style={{ fontSize: "8pt"}}>(Gets Presigned URLS for all imagesnames in state)</p> */}
+          { this.state.isWon ? <div><PlayAgainButton handlePlayAgain={this.handlePlayAgain} /></div> : null }
 
           { this.state.gameDifficulty ? null : <NewGameForm handleGameDifficulty={this.handleGameDifficulty}/> }
           <br/>
@@ -220,8 +203,6 @@ class HomePage extends Component {
               <button onClick={this.selectImagesForCurrentGame}>PLAY GAME!</button> 
             </div> : null
           }
-
-          {/* { this.state.murderer ? <div className={ this.state.shouldHide ? 'hidden' : ''} ><PlayGameButton handleAnalyzeImage={this.handleAnalyzeImage}/></div>  : null } */}
 
           { this.state.murderer ? console.log(`The murderer is ${this.state.murderer}`) : null }
           
@@ -233,7 +214,7 @@ class HomePage extends Component {
           
           { this.state.gameStarted ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }          
 
-          { this.state.isWon ? <div><PlayAgainButton handlePlayAgain={this.handlePlayAgain} /></div> : null }
+
           </div>
 {/* 
         }

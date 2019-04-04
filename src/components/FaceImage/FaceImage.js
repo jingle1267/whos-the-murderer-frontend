@@ -14,7 +14,6 @@ class FaceImage extends Component {
   handleClick(event) {
     event.preventDefault();
     this.props.handleClickedImage(event)
-    // this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
     this.setState({ 
       isFlipped: true 
     })
@@ -23,22 +22,20 @@ class FaceImage extends Component {
   handleWinningGuess = () => {
     if (this.props.imageURL === this.props.murderer) {
       return <Col lg={6} xl={4} >
-      <Image src={this.props.imageURL} roundedCircle  id="murderer" className="enlarge" style={{ maxHeight: "30vh", border: "solid 15px black" }}/> 
-    </Col> 
+        <Image src={this.props.imageURL} roundedCircle  id="murderer" className="enlarge" style={{ maxHeight: "30vh", border: "solid 15px black" }}/> 
+      </Col> 
     } else {
       return <Col lg={6} xl={4} >
-      <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "30vh", border: "solid 15px grey", opacity: "0.5" }}/> 
-    </Col> 
+          <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "30vh", border: "solid 15px grey", opacity: "0.5" }}/> 
+        </Col> 
     }
   }
 
   render() {
-    // console.log(this.props.isWon)
     return (
       <div>
-
         { this.props.isWon ? this.handleWinningGuess() :
-          <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+          <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="vertical">
             <Col lg={6} xl={4} key="front" >
               <Image onClick={this.handleClick} src={this.props.imageURL} roundedCircle style={{ maxHeight: "30vh", border: "solid 15px grey" }}/>
             </Col>
@@ -46,7 +43,7 @@ class FaceImage extends Component {
               <Image src={this.props.imageURL} roundedCircle  style={{ maxHeight: "30vh", border: "solid 15px grey", opacity: "0.5" }}/> 
             </Col>         
           </ReactCardFlip>
-          }
+        }
       </div>
     );
   }

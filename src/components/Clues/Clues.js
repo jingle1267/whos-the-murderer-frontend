@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Row, Container } from 'react-bootstrap';
+
 class Clues extends Component {
   state = {
     showClues : -1,

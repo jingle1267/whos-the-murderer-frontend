@@ -5,17 +5,24 @@ import parseImageJSON from "../../api/parseImageJSON"
 import FailMessage from "../FailMessage/FailMessage"
 import SuccessUploadMessage from "../SuccessUploadMessage/SuccessUploadMessage"
 
-
-
-
 class FileUpload extends Component {
   constructor(props){
     super(props);
     this.state = {
       success : false,
       newUpload : true,
-      shouldHide : false
+      shouldHide : false,
+      imageAttributes : null
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      success : false,
+      newUpload : true,
+      shouldHide : false,
+      imageAttributes : null
+    })
   }
   
   handleChange = (ev) => {
@@ -54,20 +61,21 @@ class FileUpload extends Component {
       Key: this.props.imageName.image_name,
       Expires: 1800
     });
-    this.analyzeImage(url)
+    this.analyzeImagewithResponse(url)
   }
 
-  analyzeImage = (url) => {
+  analyzeImagewithResponse = (url) => {
     FixedGoogleVisionAPI.analyzeImage(url)
       .then((JSONresponse) => { 
         console.log(JSONresponse)
-        let data = parseImageJSON.isImageValid(JSONresponse)
-        console.log(data)
+        let data = parseImageJSON.isImageValidwithJson(JSONresponse)
+        // console.log(data)
         if (data) {
           this.setState({ 
             success: true,
-            shouldHide : true
-          }) 
+            shouldHide : true,
+            imageAttributes : data
+          })
         } else {
           this.deleteImagefromBucket()
         }
@@ -107,12 +115,13 @@ class FileUpload extends Component {
       { this.state.newUpload  ? 
           <center className={ this.state.shouldHide ? 'hidden' : ''} >
             <h3>Upload a new face!</h3>
-            <input onChange={this.handleChange} ref={(ref) => { this.uploadInput = ref; }} type="file"/>
+            <label className="button" htmlFor="file">Choose a file</label>
+            <input onChange={this.handleChange} ref={(ref) => { this.uploadInput = ref; }} name="file" id="file" className="inputfile" type="file"/>
             <br/>
             <button onClick={this.handleUpload_AWS_SDK}>UPLOAD</button>
           </center> : <FailMessage handleReload={this.handleReload} />
         }
-      { this.state.success ? <SuccessUploadMessage handleReload={this.handleReload} /> : null }
+      { this.state.success ? <SuccessUploadMessage imageAttributes={this.state.imageAttributes} handleReload={this.handleReload} /> : null }
         
       </div>
     );
