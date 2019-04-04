@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 var AWS = require('aws-sdk');
 
 AWS.config.update(
