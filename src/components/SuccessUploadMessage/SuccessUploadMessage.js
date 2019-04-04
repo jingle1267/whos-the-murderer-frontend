@@ -18,11 +18,13 @@ class SuccessUploadMessage extends Component {
           <h4>Woohoo! Successfully uploaded!</h4>
           <hr/>
           <p> Your image shows the following:</p>
-          <h5>{this.props.imageAttributes.mainEmotion}</h5>
+          <h5>{this.props.imageAttributes.mainEmotion.toUpperCase()}</h5>
 
           <p>And it looks like the person has the following features:</p>
-          <h5>{this.props.imageAttributes.features[0]}</h5>
-          <h5>{this.props.imageAttributes.features[1]}</h5>
+          <h5>{this.props.imageAttributes.features[0].toUpperCase()}</h5>
+          <h5>{this.props.imageAttributes.features[1].toUpperCase()}</h5>
+          <h5>{this.props.imageAttributes.features[2].toUpperCase()}</h5>
+
 
 
           <br/>

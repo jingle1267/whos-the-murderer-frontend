@@ -1,10 +1,10 @@
 const fetchImages = () => {
-  return fetch(`https://cors-anywhere.herokuapp.com/https://guess-the-murderer-backend.herokuapp.com/guess-who/images/`)
+  return fetch(`https://cors-anywhere.herokuapp.com/https://whos-the-murderer-backend.herokuapp.com/guess-who/images/`)
     .then((response) => response.json());
 }
 
 const addImage = (imageName) => {
-  return fetch('https://cors-anywhere.herokuapp.com/https://guess-the-murderer-backend.herokuapp.com/guess-who/images/', {
+  return fetch('https://cors-anywhere.herokuapp.com/https://whos-the-murderer-backend.herokuapp.com/guess-who/images/', {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -14,7 +14,7 @@ const addImage = (imageName) => {
 }
 
 // const deleteImage = (imageName) => {
-//   return fetch(`https://cors-anywhere.herokuapp.com/https://guess-the-murderer-backend.herokuapp.com/guess-who/images/${imageName}/`, {
+//   return fetch(`https://cors-anywhere.herokuapp.com/https://whos-the-murderer-backend.herokuapp.com/guess-who/images/${imageName}/`, {
 //     headers: {
 //       'Content-Type': 'application/json'
 //     },
