@@ -66,7 +66,8 @@ function getAdditionalAttributesAsArray(jsonObject) {
 function hasHair(jsonObject) {
   for (let element of jsonObject.labelAnnotations) {
     if (/hair/i.test(element.description)) {
-      return imageData.features.push("Hair")
+      imageData.features.push("Hair")
+      break
     }
   }
 }
@@ -88,11 +89,24 @@ const isImageValid = (responseJson) => {
   } else if (imageData.features.length < 1) {
     return false
   } else {
-    return true
+    return true 
+  }
+}
+
+const isImageValidwithJson = (responseJson) => {
+  let imageData = parseData(responseJson)
+  if (!imageData.mainEmotion) {
+    return false
+  } else if (imageData.features.length < 1) {
+    return false
+  } else {
+    return imageData 
   }
 }
 
 export default {
   parseData: parseData,
-  isImageValid: isImageValid
-}
+  isImageValid: isImageValid,
+  isImageValidwithJson: isImageValidwithJson
+
+,}

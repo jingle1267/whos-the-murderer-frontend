@@ -12,7 +12,7 @@ class FailMessage extends Component {
       <div style={{padding:50}}>
         <h4>Unfortunately that image could not be properly analyzed. </h4>
         <p>Try showing one of the 4 following emotions or maybe a hat?</p>
-        <p>JOY   SORROW   SURPRISE   ANGER</p>
+        <h2>JOY   SORROW   SURPRISE   ANGER</h2>
         <br/>
           <button onClick={this.handleSubmit.bind(this)}> Upload a different image </button>
       </div>

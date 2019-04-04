@@ -1,28 +1,16 @@
 .App {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
-  /* justify-content: center;  */
-  /* vertically */
   text-align: center;
-  /* padding: 0px 30px; */
   min-height: 100vh;
-  /* min-height: 800px; */
-
   min-width: 100vw;
   font-family: 'Montserrat'
-
 }
 
 .App-body {
   padding: 0px 30px;
-  /* min-height: 100vh;
-  min-width: 80vw; */
+
 }
 .hint-title {
-  /* font-size: 0.8em; */
   margin-bottom: 80px;
-  
 }
 
 .hint-text {
@@ -32,7 +20,6 @@
   margin-bottom: 30px;
 }
 .hint-end {
-  /* font-size: 0.8em; */
   margin-bottom: 80px
 }
 
@@ -59,35 +46,16 @@
 }
 
 .won-message {
-  /* text-align: center; */
   background-color: rgba(255, 255, 255, 0.8);
-  min-height: 100vh;
-  min-width: 100vw;
-  max-width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  /* flex-direction: row; */
   align-items: center;
   justify-content: center;
-  position: absolute;
-  margin-top: -100vh;
-  /* margin-top: -400px; */
-
-  /* margin-left: -40vh; */
-}
-
-.overlay {
-  position: fixed; /* Sit on top of the page content */
-  display: none; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0; 
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(189, 105, 105, 0.5); /* Black background with opacity */
-  z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
+  position: fixed;
+  z-index: 1000;
+  top: 0;
 }
 
 .hidden {
@@ -112,7 +80,7 @@ button:hover {
 .NavBar {
   font-family: 'Montserrat';
   font-weight: 600;
-  font-size: 4em;
+  font-size: 3em;
   color: black
 }
 .NavBar:hover {
@@ -120,13 +88,34 @@ button:hover {
 }
 
 .links {
-  /* color: rgba(48, 48, 48, 0.863); */
-  /* padding: 10px */
   color: #005c99;
-
 }
 
 .links:hover {
   text-decoration: none;
   color: white;
+}
+
+.button {
+  font-size: 10pt;
+  text-decoration: none !important;
+  color: #005c99;
+  border: solid 2px #005c99;
+  padding: 5px;
+  margin-right: 5px
+}
+
+.button:hover {
+  color: white;
+  background-color: #005c99;
+  border: solid 2px #005c99;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }

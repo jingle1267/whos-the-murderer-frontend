@@ -27,8 +27,6 @@ class NewGameForm extends Component {
             </Col>
           </Row>
         </Container>
-
-        
         
       </div>
     );

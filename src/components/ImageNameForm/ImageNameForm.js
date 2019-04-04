@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Container, Row, Col } from 'react-bootstrap';
 import ImageNamesAPI from '../../api/djangoAPI/ImageNamesAPI';
 
 
@@ -27,21 +27,16 @@ class ImageNameForm extends Component {
         <Container>
           <Row>
             <Col md={{ span: 6, offset: 3 }}>
-
-                  <Form.Label>Please choose a name for the image.</Form.Label>
-                  
+              <Form.Label>Please choose a name for the image.</Form.Label>    
             </Col>
           </Row>
           <Row>
             <Col md={{ span: 4, offset: 4 }}>
             <Form  onSubmit={this.handleSaveImageName.bind(this)}>
               <Form.Group>
-                  {/* <Form.Label>Please choose a name for the image.</Form.Label> */}
-                  {/* <br/> */}
-                  <small>Must be unique!</small>
-                  <Form.Control defaultValue={ null } />
-                </Form.Group>
-
+                <small>Must be unique!</small>
+                <Form.Control defaultValue={ null } />
+              </Form.Group>
                 <button type="submit">
                   Next
                 </button>
@@ -49,8 +44,6 @@ class ImageNameForm extends Component {
             </Col>
           </Row>
         </Container>
-
-
         
       </div>
     );
