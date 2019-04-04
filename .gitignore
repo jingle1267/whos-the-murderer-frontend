@@ -26,8 +26,8 @@ yarn-error.log*
 
 .env
 
-/src/api/S3ImagesAPI.js
-src/api/S3ImagesAPI.js
+# /src/api/S3ImagesAPI.js
+# src/api/S3ImagesAPI.js
 
-/src/api/GoogleVisionAPI.js
-src/api/GoogleVisionAPI.js
+# /src/api/GoogleVisionAPI.js
+# src/api/GoogleVisionAPI.js
