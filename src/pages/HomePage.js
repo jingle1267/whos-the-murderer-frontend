@@ -32,6 +32,18 @@ class HomePage extends Component {
   }
 
   componentDidMount(){
+    this.setState({
+      presignedImageUrls : [],
+      // clues : [],
+      // imageNames : [],
+      murderer: "",
+      gameDifficulty: 0,
+      murdererAttributes : {},
+      isWon: false,
+      gameStarted: false,
+      guessAgain: false,
+      hidden: false,
+    })
     let imageNames = []
     let clues = []
     ImageNamesAPI.fetchImages()
@@ -42,7 +54,7 @@ class HomePage extends Component {
         this.setState({
           imageNames: imageNames
         })
-    })
+      })
       .catch((error) => {
         console.log(error)
       })
@@ -52,13 +64,10 @@ class HomePage extends Component {
         this.setState({
           clues: clues[0]
         })
-    })
+      })
       .catch((error) => {
         console.log(error)
       })
-    //   setTimeout(function() { //Start the timer
-    //     this.setState({loading: false}) //After 1 second, set render to true
-    // }.bind(this), 2000)
   }
 
   getImageURLs = () => {
@@ -134,7 +143,7 @@ class HomePage extends Component {
   }
 
   handleChooseMurderer = (currentGameImages) => {
-    console.log(currentGameImages)
+    // console.log(currentGameImages) 
     var murderer = currentGameImages[Math.floor(Math.random()*currentGameImages.length)];
     this.setState({
       murderer: murderer
@@ -156,7 +165,8 @@ class HomePage extends Component {
     if (clickedImgUrl === this.state.murderer) {
       this.setState({
         isWon: true,
-        guessAgain: false
+        guessAgain: false,
+        murdererAttributes: {}
       })
     } else {
       this.setState({

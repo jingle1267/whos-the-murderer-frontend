@@ -14,7 +14,9 @@ class ImageNameForm extends Component {
     ImageNamesAPI.addImage(imageName)
       .then((response) => {
         if (response.status === 201) {
-          this.props.handleSaveImageName(imageName)
+          console.log(response)
+
+          // this.props.handleSaveImageName(imageName)
         } else {
           alert("Name must be unique please try again.")
         }

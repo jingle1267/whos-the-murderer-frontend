@@ -89,6 +89,8 @@ button:hover {
 
 .links {
   color: #005c99;
+  min-height: 1.5vw;
+
 }
 
 .links:hover {
@@ -97,7 +99,10 @@ button:hover {
 }
 
 .button {
-  font-size: 10pt;
+  /* min-height: 2vw;
+  height: 10%;
+  max-height: 4vw; */
+
   text-decoration: none !important;
   color: #005c99;
   border: solid 2px #005c99;
@@ -118,4 +123,32 @@ button:hover {
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
+}
+
+.text-links {
+  color: #005c99;
+  font-size: 1.5vw;
+}
+
+.text-links:hover {
+  text-decoration: none;
+  color: #024877;
+}
+
+.text {
+  font-size: 0.8em;
+  font-weight: 200;
+}
+.subtitle {
+  font-size: 0.7em;
+  font-weight: 200;
+}
+
+.text-link {
+  color: #005c99;
+}
+
+.text-link:hover {
+  text-decoration: none;
+  color: #003c63;
 }
