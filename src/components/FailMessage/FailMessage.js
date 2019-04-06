@@ -10,9 +10,12 @@ class FailMessage extends Component {
   render() {
     return (
       <div style={{padding:50}}>
-        <h4>Unfortunately that image could not be properly analyzed. </h4>
-        <p>Try showing one of the 4 following emotions or maybe a hat?</p>
-        <h2>JOY   SORROW   SURPRISE   ANGER</h2>
+        <h4>Unfortunately that image could not be properly classified.</h4>
+        <p>You need to show one of the 4 following emotions or try wearing a hat!</p>
+        <h3>JOY</h3>   
+        <h3>SORROW</h3>
+        <h3>SURPRISE</h3>   
+        <h3>ANGER</h3>
         <br/>
           <button onClick={this.handleSubmit.bind(this)}> Upload a different image </button>
       </div>

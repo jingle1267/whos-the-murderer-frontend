@@ -18,15 +18,15 @@ let imageData = {
 
 function grabMainEmotion(jsonObject) {
   const emotion = jsonObject.faceAnnotations[0]
-  if (emotion.joyLikelihood === "VERY_LIKELY" || emotion.joyLikelihood === "POSSIBLE" || emotion.joyLikelihood === "LIKELY") {
+  if (emotion.joyLikelihood === "VERY_LIKELY" || emotion.joyLikelihood === "LIKELY") {
     imageData.mainEmotion = "joy"
-  } else if (emotion.sorrowLikelihood === "VERY_LIKELY" || emotion.sorrowLikelihood === "POSSIBLE" || emotion.sorrowLikelihood === "LIKELY") {
+  } else if (emotion.sorrowLikelihood === "VERY_LIKELY" || emotion.sorrowLikelihood === "LIKELY") {
     imageData.mainEmotion = "sorrow"
-  } else if (emotion.angerLikelihood === "VERY_LIKELY" || emotion.angerLikelihood === "POSSIBLE" ||emotion.angerLikelihood === "LIKELY") {
+  } else if (emotion.angerLikelihood === "VERY_LIKELY" ||emotion.angerLikelihood === "LIKELY") {
     imageData.mainEmotion = "anger"
-  } else if (emotion.surpriseLikelihood === "VERY_LIKELY" || emotion.surpriseLikelihood === "POSSIBLE" || emotion.surpriseLikelihood === "LIKELY") {
+  } else if (emotion.surpriseLikelihood === "VERY_LIKELY" || emotion.surpriseLikelihood === "LIKELY") {
     imageData.mainEmotion = "surprise"
-  } else if (emotion.headwearLikelihood === "VERY_LIKELY" || emotion.headwearLikelihood === "POSSIBLE" || emotion.headwearLikelihood === "LIKELY") {
+  } else if (emotion.headwearLikelihood === "VERY_LIKELY" || emotion.headwearLikelihood === "LIKELY") {
     imageData.mainEmotion = "hat"
   }
 }
@@ -66,18 +66,22 @@ function getAdditionalAttributesAsArray(jsonObject) {
 function hasHair(jsonObject) {
   for (let element of jsonObject.labelAnnotations) {
     if (/hair/i.test(element.description)) {
-      imageData.features.push("Hair")
-      break
+      if (!imageData.features.includes("Hair")) {
+        imageData.features.push("Hair")
+        break
+      }
     }
   }
 }
 
 const parseData = (responseJson) => {
   let jsonObject = responseJson.responses[0]
+  imageData.features = []
   grabMainEmotion(jsonObject)
   grabColors(jsonObject)
   hasHair(jsonObject)
   getAdditionalAttributesAsArray(jsonObject)
+  console.log(imageData)
   return imageData
 } 
 
