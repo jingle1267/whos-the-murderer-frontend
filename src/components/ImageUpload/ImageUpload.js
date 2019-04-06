@@ -187,7 +187,7 @@ class ImageUpload extends Component {
                   </div>
             <button onClick={this.handleUpload_AWS_SDK}>UPLOAD</button>
             <br/><br/>            
-            <a rel="noopener noreferrer" className="text-links" href="https://cloud.google.com/vision/" target="_blank">Learn more about the image analysis, that uses Google's powerful machine learning models!</a>
+            <a rel="noopener noreferrer" className="text-links subtitle" href="https://cloud.google.com/vision/" target="_blank">Learn more about the image analysis, that uses Google's powerful machine learning models!</a>
 
 
           </center> : <FailMessage handleReload={this.handleReload} />
