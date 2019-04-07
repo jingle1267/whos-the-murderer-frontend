@@ -54,13 +54,9 @@ class ImageUpload extends Component {
 
   handleUpload_AWS_SDK = (ev) => {
     let file = this.uploadInput.files[0];
-    // let file = this.uploadInput.file;
     console.log(file);
-    // Split the filename to get the name and type
-    // let fileParts = this.uploadInput.files[0].name.split('.');
-    // let fileName = fileParts[0];
+
     let fileName = this.state.uniqueImageName;
-    // let fileName = this.props.imageName.image_name;
     console.log("Preparing the upload");
     var params = {
       Bucket: "guess-who-images", 
@@ -93,9 +89,9 @@ class ImageUpload extends Component {
   analyzeImagewithResponse = (url) => {
     FixedGoogleVisionAPI.analyzeImage(url)
       .then((JSONresponse) => { 
-        console.log(JSONresponse)
+        // console.log(JSONresponse)
         let data = parseImageJSON.isImageValidwithJson(JSONresponse)
-        console.log(data)
+        // console.log(data)
         if (data) {
           this.saveImageName()
           this.setState({ 
@@ -168,7 +164,7 @@ class ImageUpload extends Component {
 
             <h3>Upload a new face!</h3>
             <br />
-            <div style={{maxWidth : "45vw"}}>When you upload an image, the face will be analyzed to see if it's suitable for Who's the Murderer! <br/><br/> The face must clearly show either joy, sorrow, anger or surprise, or they could be wearing a hat!  Other features will also be discovered, such as glasses, moustaches, beards and so on! <hr /></div>
+            <div style={{maxWidth : "45vw"}} className='text'>When you upload an image, the face will be analyzed to see if it's suitable for Who's the Murderer! <br/><br/> The face must clearly show either joy, sorrow, anger or surprise, or they could be wearing a hat!  Other features will also be discovered, such as glasses, moustaches, beards and so on! <hr /></div>
             
             <h5>Are YOU the Murderer?</h5>
             <p style={{ margin: "8px"}}>
