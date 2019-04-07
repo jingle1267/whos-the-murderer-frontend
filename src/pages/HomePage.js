@@ -161,7 +161,8 @@ class HomePage extends Component {
   }
 
   handleClickedImage = (ev) => {
-    let clickedImgUrl = ev.target.src
+
+    let clickedImgUrl = ev.target.id
     if (clickedImgUrl === this.state.murderer) {
       this.setState({
         isWon: true,
@@ -221,8 +222,9 @@ class HomePage extends Component {
           { this.state.guessAgain ? <p className="guess-again">Nope - guess again!</p> : <div style={{ marginBottom: "32px"}} ></div> }
 
           
-          
-          { this.state.gameStarted ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }          
+          <center>
+          { this.state.gameStarted ? <ImagesList imageURLs={this.state.presignedImageUrls} handleClickedImage={this.handleClickedImage} isWon={this.state.isWon} murderer={this.state.murderer} /> : null }  
+          </center>        
 
 
           </div>

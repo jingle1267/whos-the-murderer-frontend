@@ -9,13 +9,13 @@ class AppNav extends Component {
       <div>
 
         <Container   style={{ marginBottom: "10px", borderBottom: "solid 0.2em #005c99", padding: "25px 0px 5px 0px"}}>
+          <center>
           <button style={{ float: "right", marginTop: "2%", marginBottom: "10px" }} >
             <Link className="links" to={"/upload-file"}>Upload your<br/> own face!</Link>
           </button>
-          <center>
             <Link className="NavBar" style={{ textDecoration: "None",  padding: "5px 5px", marginRight: "-8%"}} to={"/"}>Who's the Murderer?</Link>
             <div className="subtitle">Created by
-            <a rel="noodivener noreferrer" className="text-link" href="https://github.com/wynspeare/" target="_blank"> Caroline Cessaro</a>
+            <a rel="noopener noreferrer" className="text-link" href="https://github.com/wynspeare/" target="_blank"> Caroline Cessaro</a>
             </div>
           </center>
         </Container>
