@@ -4,7 +4,6 @@ import HomePage from './pages/HomePage';
 import UploadImagePage from './pages/UploadImagePage';
 import Page404 from './pages/page404';
 import AppNav from './components/AppNav/AppNav'
-
 import './App.css';
 
 class App extends Component {
@@ -14,8 +13,8 @@ class App extends Component {
       <div className="App">
 
         <BrowserRouter>
-            <AppNav />
-            <div  className="App-body">
+          <AppNav />
+          <div className="App-body">
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/upload-file" component={UploadImagePage} />
@@ -23,7 +22,7 @@ class App extends Component {
             </Switch>
           </div>
         </BrowserRouter>
-        
+
       </div>
 
     );

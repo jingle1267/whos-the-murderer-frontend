@@ -13,15 +13,6 @@ const addImage = (imageName) => {
   })
 }
 
-// const deleteImage = (imageName) => {
-//   return fetch(`https://cors-anywhere.herokuapp.com/https://whos-the-murderer-backend.herokuapp.com/guess-who/images/${imageName}/`, {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'DELETE'
-//   })
-// }
-
 export default {
   addImage: addImage,
   fetchImages: fetchImages

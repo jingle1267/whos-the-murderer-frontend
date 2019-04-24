@@ -35,6 +35,7 @@ class Clues extends Component {
   render() {
     return (
       <div>
+        
         { this.state.showClues === this.state.currentGameHints.length 
           ? <p className="hint-end" >That's all the clues you're going to get, try making a guess!</p> 
           : <h6 onClick={this.handleClick} className="hint-title">Psst! Need a hint?</h6> 

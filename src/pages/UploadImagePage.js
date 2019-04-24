@@ -3,19 +3,19 @@ import ImageUpload from '../components/ImageUpload/ImageUpload';
 
 class UploadImagePage extends Component {
   state = {
-    imageName : null
+    imageName : ""
   }
 
   handleReload = () => {
     this.setState({
-      imageName : null
+      imageName : ""
     })
   }
   
   render() {
     return (
       <div>
-      <ImageUpload handleReload={this.handleReload} />
+        <ImageUpload handleReload={this.handleReload} />
       </div>
     );
   }

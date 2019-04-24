@@ -44,8 +44,7 @@ function grabColors(jsonObject) {
   };
 }
 
-
-function getAdditionalAttributesAsArray(jsonObject) {
+function grabAdditionalAttributes(jsonObject) {
   let newAttributes = []
   for (let element of jsonObject.labelAnnotations) {
     if (possibleAttributes.includes(element.description)) {
@@ -78,24 +77,11 @@ const parseData = (responseJson) => {
   grabMainEmotion(jsonObject)
   grabColors(jsonObject)
   hasHair(jsonObject)
-  getAdditionalAttributesAsArray(jsonObject)
-  // console.log(imageData)
+  grabAdditionalAttributes(jsonObject)
   return imageData
-} 
-
-const isImageValid = (responseJson) => {
-  let imageData = parseData(responseJson)
-  // console.log(imageData)
-  if (!imageData.mainEmotion) {
-    return false
-  } else if (imageData.features.length < 1) {
-    return false
-  } else {
-    return true 
-  }
 }
 
-const isImageValidwithJson = (responseJson) => {
+const isImageValid = (responseJson) => {
   let imageData = parseData(responseJson)
   if (!imageData.mainEmotion) {
     return false
@@ -108,7 +94,5 @@ const isImageValidwithJson = (responseJson) => {
 
 export default {
   parseData: parseData,
-  isImageValid: isImageValid,
-  isImageValidwithJson: isImageValidwithJson
-
-,}
+  isImageValid: isImageValid
+}
