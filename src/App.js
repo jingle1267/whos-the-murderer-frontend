@@ -23,8 +23,7 @@ class App extends Component {
             </Switch>
           </div>
         </BrowserRouter>
-        {/* <p className="footer">Created by Caroline Cessaro</p> */}
-
+        
       </div>
 
     );
