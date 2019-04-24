@@ -8,7 +8,12 @@ class ImagesList extends Component {
     let images = Object.values(this.props.imageURLs)
     return images.map(( imageURL, index ) =>
       <div key={index} >
-        <FaceImage imageURL={imageURL} handleClickedImage={this.handleClickedImage} isWon={this.props.isWon} murderer={this.props.murderer}/>
+        <FaceImage 
+          imageURL={imageURL} 
+          handleClickedImage={this.handleClickedImage} 
+          isWon={this.props.isWon} 
+          murderer={this.props.murderer}
+        />
       </div>
       )
     }
@@ -20,16 +25,14 @@ class ImagesList extends Component {
   render() {
     return (
       <div>
-
-            <center>
+        <center>
         <Container>
-          <Row>
+          <Row xl={{ span: 10, offset: 1 }}>
             { this.createImageCircles() }
           </Row>
-        </Container> 
-            </center>
+        </Container>
+        </center>
       </div>
-
     );
   }
 }
